@@ -12,7 +12,8 @@ public class ProdutoApp {
             System.out.println("\n--- Menu ---");
             System.out.println("1. Cadastrar Produto");
             System.out.println("2. Consultar Produto");  
-            System.out.println("3. Sair");
+            System.out.println("3. Inativar Produto");
+            System.out.println("4. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine(); // Consumir a quebra de linha
@@ -23,23 +24,22 @@ public class ProdutoApp {
                     break;
                 case 2:
                     consultarProduto(scanner);
-                    break;               
+                    break; 
                 case 3:
+                    inativarProduto(scanner);
+                    break;
+                case 4:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
-        } while (opcao != 3);
+        } while (opcao != 4);
 
         scanner.close();
     }
 
-    private static void inativarProduto(Scanner scanner) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inativarProduto'");
-    }
-
+    // Método para cadastrar um produto
     private static void cadastrarProduto(Scanner scanner) {
         System.out.print("Digite o nome do produto: ");
         String nome = scanner.nextLine();
@@ -51,6 +51,7 @@ public class ProdutoApp {
         produtoDAO.cadastrarProduto(produto);
     }
 
+    // Método para consultar um produto pelo ID
     private static void consultarProduto(Scanner scanner) {
         System.out.print("Digite o ID do produto que deseja consultar: ");
         int id = scanner.nextInt();
@@ -60,7 +61,16 @@ public class ProdutoApp {
         if (produto != null) {
             System.out.println("Produto encontrado: " + produto);
         } else {
-            System.out.println("Produto com ID " + id + " não encontrado.");
+            System.out.println("Produto com ID " + id + " não encontrado ou está inativo.");
         }
+    }
+
+    // Método para inativar um produto pelo ID
+    private static void inativarProduto(Scanner scanner) {
+        System.out.print("Digite o ID do produto que deseja inativar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha
+
+        produtoDAO.desativarProduto(id);
     }
 }
