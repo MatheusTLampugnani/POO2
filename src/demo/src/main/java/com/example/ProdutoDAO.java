@@ -26,21 +26,8 @@ public class ProdutoDAO {
         }
     }
 
-    // Método para verificar se a coluna 'status' existe na tabela
-    private boolean temColunaStatus(Connection conn) {
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("PRAGMA table_info(produto)")) {
 
-            while (rs.next()) {
-                if ("status".equalsIgnoreCase(rs.getString("name"))) {
-                    return true; // Coluna já existe
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar a coluna status: " + e.getMessage());
-        }
-        return false; // Coluna não existe
-    }
+  
 
     // Método para cadastrar um novo produto
     public void cadastrarProduto(Produto produto) {
@@ -73,21 +60,5 @@ public class ProdutoDAO {
         return null;
     }
 
-    // Método para desativar um produto
-    public void desativarProduto(int id) {
-        String sqlUpdate = "UPDATE produto SET status = 0 WHERE id = ?";
-        try (Connection conn = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = conn.prepareStatement(sqlUpdate)) {
-            pstmt.setInt(1, id);
-            int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Produto desativado com sucesso!");
-            } else {
-                System.out.println("Produto não encontrado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao desativar produto: " + e.getMessage());
-        }
-    }
+  
 }
